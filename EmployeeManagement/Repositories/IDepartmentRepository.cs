@@ -4,7 +4,7 @@ namespace EmployeeManagement.Repositories
 {
     public interface IDepartmentRepository
     {
-        Task<List<Department>> GetAllAsync();
+        Task<IEnumerable<Department>> GetAllAsync();
         Task<Department?> GetByIdAsync(int id);
         Task AddAsync(Department department);
     }

@@ -10,7 +10,12 @@ namespace EmployeeManagement.Repositories
         private readonly ApplicationDbContext _context;
         public DepartmentRepository(ApplicationDbContext context) => _context = context;
 
-        public async Task<List<Department>> GetAllAsync() => await _context.Departments.ToListAsync();
+        public async Task<IEnumerable<Department>> GetAllAsync()
+        {
+            return await _context.Departments
+                .Include(d => d.Employees)
+                .ToListAsync();
+        }
         public async Task<Department?> GetByIdAsync(int id) => await _context.Departments.FindAsync(id);
         public async Task AddAsync(Department department)
         {
