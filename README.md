@@ -21,37 +21,43 @@
   "DefaultConnection": "Server=(localdb);Database=EmployeeManagementDB;Trusted_Connection=True;"
 }
 3. **Run Migrations**
+   
    dotnet ef migrations add InitialCreate
    
    dotnet ef database update
+   
 5. **Start API**
+   
    dotnet run
+   
    Access at : http://localhost:5186/swagger
 
-6. **Project Structure**
+7. **Project Structure**
+   
   ├── Controllers/        → API endpoints
   ├── DTOs/               → Request/response models
   ├── Entities/           → Domain models (Employee, Department)
   ├── Repositories/       → Interfaces + Implementations
   ├── Data/               → DbContext + Seed/Migration
   ├── Program.cs          → App config + DI
-7. **Features**
+  
+9. **Features**
   Employee Operations
   CRUD endpoints
   Server-side validation (DataAnnotations)
   Unique email enforced
-8. **Filtering & Sorting**
+10. **Filtering & Sorting**
   GET /api/employee/filter
   Supports:
   name, departmentId, status, hireDateFrom, hireDateTo
   Sorting by name or hireDate
   Example : /api/employee/filter?status=Active&sortBy=hireDate&sortOrder=desc&pageNumber=1&pageSize=5
 
-9. **Log History**
+11. **Log History**
   Tracks Created, Updated, Deleted actions
   View logs: GET /api/logs
 
-10. **Sample Request**
+12. **Sample Request**
     POST /api/employee
   {
     "name": "Jane Doe",
