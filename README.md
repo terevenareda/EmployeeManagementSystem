@@ -45,19 +45,20 @@
   Employee Operations
   CRUD endpoints
   Server-side validation (DataAnnotations)
+  Pagination for employees list
   Unique email enforced
-10. **Filtering & Sorting**
+11. **Filtering & Sorting**
   GET /api/employee/filter
   Supports:
   name, departmentId, status, hireDateFrom, hireDateTo
   Sorting by name or hireDate
   Example : /api/employee/filter?status=Active&sortBy=hireDate&sortOrder=desc&pageNumber=1&pageSize=5
 
-11. **Log History**
+12. **Log History**
   Tracks Created, Updated, Deleted actions
   View logs: GET /api/logs
 
-12. **Sample Request**
+13. **Sample Request**
     POST /api/employee
   {
     "name": "Jane Doe",
