@@ -22,35 +22,36 @@
 }
 3. **Run Migrations**
    dotnet ef migrations add InitialCreate
+   
    dotnet ef database update
-4. **Start API**
+5. **Start API**
    dotnet run
    Access at : http://localhost:5186/swagger
 
-5. **Project Structure**
+6. **Project Structure**
   ├── Controllers/        → API endpoints
   ├── DTOs/               → Request/response models
   ├── Entities/           → Domain models (Employee, Department)
   ├── Repositories/       → Interfaces + Implementations
   ├── Data/               → DbContext + Seed/Migration
   ├── Program.cs          → App config + DI
-6. **Features**
+7. **Features**
   Employee Operations
   CRUD endpoints
   Server-side validation (DataAnnotations)
   Unique email enforced
-7. **Filtering & Sorting**
+8. **Filtering & Sorting**
   GET /api/employee/filter
   Supports:
   name, departmentId, status, hireDateFrom, hireDateTo
   Sorting by name or hireDate
   Example : /api/employee/filter?status=Active&sortBy=hireDate&sortOrder=desc&pageNumber=1&pageSize=5
 
-8. **Log History**
+9. **Log History**
   Tracks Created, Updated, Deleted actions
   View logs: GET /api/logs
 
-9. **Sample Request**
+10. **Sample Request**
     POST /api/employee
   {
     "name": "Jane Doe",
