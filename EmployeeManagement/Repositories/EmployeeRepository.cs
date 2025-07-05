@@ -14,6 +14,22 @@ namespace EmployeeManagement.Repositories
                 .Include(e => e.Department)
                 .ToListAsync();
         }
+        public async Task<(List<Employee> Data, int TotalCount)> GetPagedAsync(int pageNumber, int pageSize)
+        {
+            var query = _context.Employees
+                .Include(e => e.Department) 
+                .AsQueryable();
+
+            var totalCount = await query.CountAsync();
+
+            var data = await query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (data, totalCount);
+        }
+
         public async Task<Employee?> GetByIdAsync(int id)
         {
             return await _context.Employees

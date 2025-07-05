@@ -1,5 +1,6 @@
 ﻿using EmployeeManagement.Entities;
 using EmployeeManagement.Repositories;
+using EmployeeManagement.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeManagement.Controllers
@@ -8,15 +9,17 @@ namespace EmployeeManagement.Controllers
     [Route("api/logs")]
     public class LogController :ControllerBase
     {
-        private readonly ILogHistoryRepository _repository;
-        public LogController(ILogHistoryRepository repository)
+        private readonly IUnitOfWork _unitOfWork;
+
+        public LogController(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<LogHistory>>> GetLogs()
         {
-            var logs = await _repository.GetAllAsync();
+            var logs = await _unitOfWork.Logs.GetAllAsync();
             return Ok(logs);
         }
        

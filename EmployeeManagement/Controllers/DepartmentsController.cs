@@ -2,6 +2,7 @@
 using EmployeeManagement.DTOs;
 using EmployeeManagement.Entities;
 using EmployeeManagement.Repositories;
+using EmployeeManagement.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,25 +12,24 @@ namespace EmployeeManagement.Controllers
     [Route("api/department")]
     public class DepartmentsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DepartmentsController(ApplicationDbContext context, IDepartmentRepository repository)
+        public DepartmentsController(IUnitOfWork unitOfWork)
         {
-            _context = context;
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
-        private readonly IDepartmentRepository _repository;
+       
    
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Department>>> GetDepartments() =>
-            Ok(await _repository.GetAllAsync());
+            Ok(await _unitOfWork.Departments.GetAllAsync());
 
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Department>> GetDepartment(int id)
         {
-            var department = await _context.Departments.FindAsync(id);
+            var department = await _unitOfWork.Departments.GetByIdAsync(id);
             if (department == null)
                 return NotFound();
 
@@ -44,8 +44,8 @@ namespace EmployeeManagement.Controllers
                 Name = dto.Name
             };
 
-            _context.Departments.Add(department);
-            await _context.SaveChangesAsync();
+            await _unitOfWork.Departments.AddAsync(department);
+            await _unitOfWork.CompleteAsync();
 
             return CreatedAtAction(nameof(GetDepartment), new { id = department.ID }, department);
         }
